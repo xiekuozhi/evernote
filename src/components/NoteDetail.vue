@@ -5,7 +5,7 @@
         ><i class="iconfont icon-plus"></i>创建笔记本</a
       >
     </header>
-    <main class="List">
+    <main>
       <div class="layout">
         <h3>笔记本列表({{ notebooks.length }})</h3>
         <div class="book-list">
