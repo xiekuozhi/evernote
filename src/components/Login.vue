@@ -39,9 +39,7 @@
 </template>
 
 <script>
-import Auth from "@/apis/auth";
-import Bus from '@/helpers/bus'
-import {mapGetters,mapActions}from 'vuex'
+import {mapActions}from 'vuex'
 
 export default {
   data() {
@@ -87,7 +85,7 @@ export default {
         this.register.notice = "密码长度为6~16个字符";
         return;
       }
-      this.registerUser.register({
+      this.registerUser({
         username: this.register.username,
         password: this.register.password
       })

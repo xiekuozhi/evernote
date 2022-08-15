@@ -2,7 +2,6 @@ import Auth from "@/apis/auth";
 import router from "@/router";
 
 
-window.router = router;
 const state = {
   user: null
 };
@@ -23,6 +22,13 @@ const actions = {
       commit("setUser", { user: res.data });
     });
   },
+  logout({commit},payload={path:'/login'}){
+   return Auth.logout()
+    .then(res=>{
+     commit('setUser',{user:null})
+      router.push(payload)
+    })
+  },
   register({ commit }, { username, password }) {
     return Auth.register({ username, password })
     .then(res => {
@@ -30,7 +36,8 @@ const actions = {
     });
   },
   checkLogin({commit},payload){
-    return Auth.getInfo()
+    if(state.user!==null)return Promise.resolve()
+      return Auth.getInfo()
     .then(res=>{
       if(!res.isLogin){
         router.push(payload)

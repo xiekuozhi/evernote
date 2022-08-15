@@ -12,7 +12,7 @@ export default {
       request(URL.GET)
         .then(res => {
           res.data = res.data.sort((notebook1, notebook2) =>
-            notebook1 < notebook2 ? 1 : -1)
+            notebook1 > notebook2 ? 1 : -1)
             res.data.forEach(notebook=>{ 
             notebook.createdAtFriendly=friendlyDate(notebook.createdAt)
             notebook.updatedAtFriendly=friendlyDate(notebook.updatedAt)

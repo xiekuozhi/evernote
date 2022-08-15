@@ -43,7 +43,7 @@
 import NoteSidebar from '@/components/NoteSidebar'
 import _ from 'lodash'
 import MarkdownIt from 'markdown-it'
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 
 let md = new MarkdownIt()
@@ -88,6 +88,7 @@ export default {
       ]),
 
     onUpdateNotes: _.debounce(function() {
+      if(!this.curNote)return
       this.updateNote({ noteId: this.curNote.id, title: this.curNote.title, content: this.curNote.content })
         .then(data => {
           this.statusText = '已保存'

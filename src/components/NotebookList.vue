@@ -24,7 +24,7 @@
               <span class="action" @click.stop.prevent="onDelete(notebook)"
                 >删除</span
               >
-              <span class="date">{{ notebook.friendlyCreateAt }}</span>
+              <span class="date">{{ notebook.createdAtFriendly }}</span>
             </div>
           </router-link>
         </div>
@@ -34,10 +34,7 @@
 </template>
 
 <script>
-import Auth from "@/apis/auth";
-import Notebook from "@/apis/notebooks";
-import { friendlyDate } from "../helpers/util";
-import { mapState,mapActions,mapGetters} from 'vuex'
+import { mapActions,mapGetters} from 'vuex'
 export default {
   data() {
     return {};

@@ -6,8 +6,8 @@
         {{ curBook.title }}
         <i class="iconfont icon-down"></i>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="(notebook, id) in notebooks" :key="id" :command="notebook.id">{{ notebook.title }}
+      <el-dropdown-menu slot="dropdown" class="header-new-drop">
+        <el-dropdown-item  v-for="(notebook, id) in notebooks" :key="id" :command="notebook.id">{{ notebook.title }}
         </el-dropdown-item>
         <el-dropdown-item command="trash">回收站</el-dropdown-item>
       </el-dropdown-menu>
@@ -29,10 +29,8 @@
 </template>
 
 <script>
-import Notebooks from '@/apis/notebooks'
-import Notes from '@/apis/notes'
-import Bus from '@/helpers/bus'
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   created() {
@@ -42,6 +40,13 @@ export default {
         return this.getNotes({ notebookId: this.curBook.id });
       }).then(()=>{
         this.setCurNote({curNoteId:this.$route.query.noteId })
+        this.$router.replace({
+          path:'/note',
+          query:{
+            noteId:this.curNote.id,
+            notebookId:this.curBook.id
+          }
+        })
       })
   },
   data() {
@@ -49,7 +54,7 @@ export default {
   },
   
   computed: {
-    ...mapGetters(["notebooks", "notes", "curBook"])
+    ...mapGetters(["notebooks", "notes", "curBook","curNote"])
   },
   methods: {
     ...mapMutations(['setCurBook','setCurNote']),
@@ -62,7 +67,17 @@ export default {
         return this.$router.push({ path: "/trash" });
       }
       this.$store.commit("setCurBook", { curBookId: notebookId });
-      this.getNotes({ notebookId });
+      this.getNotes({ notebookId })
+      .then(()=>{
+        this.setCurNote()
+        this.$router.replace({
+          path:'/note',
+          query:{
+            noteId:this.curNote.id,
+            notebookId:this.curBook.id
+          }
+        })
+      })
     }
   }
 };
@@ -70,4 +85,9 @@ export default {
 
 <style lang="less">
 @import url(../assets/note-sidebar.less);
+.header-new-drop {
+  max-height:100vh;
+  overflow: auto;
+  
+ }
 </style>
